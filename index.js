@@ -94,4 +94,20 @@ class Tree {
     }
     return node;
   }
+
+  find(value) {
+    return this.findRec(this.root, value);
+  }
+
+  findRec(node, value) {
+    if (node === null) return null;
+
+    if (value === node.data) return node;
+
+    if (value < node.data) {
+      return this.findRec(node.left, value);
+    } else {
+      return this.findRec(node.right, value);
+    }
+  }
 }
