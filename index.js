@@ -110,4 +110,23 @@ class Tree {
       return this.findRec(node.right, value);
     }
   }
+
+  levelOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+        throw new Error('Callback function is required'); 
+    }
+
+    const queue = []; 
+    if (this.root !== null) {
+        queue.push(this.root); 
+    }
+
+    while (queue.length > 0) {
+        const node = queue.shift(); 
+        callback(node); 
+
+        if (node.left !== null) queue.push(node.left); 
+        if (node.right !== null) queue.push(node.right); 
+    }
+  }
 }
