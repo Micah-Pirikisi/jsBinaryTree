@@ -59,7 +59,39 @@ class Tree {
           }
         }
       };
-      return searchTree(node); 
+      return searchTree(node);
     }
+  }
+
+  deleteItem(data) {
+    this.root = this.deleteRec(this.root, data);
+  }
+
+  deleteRec(node, value) {
+    if (node === null) return null;
+
+    if (value < node.data) {
+      node.left = this.deleteRec(node.left, value);
+    } else if (value > node.data) {
+      node.right = this.deleteRec(node.right, value);
+    } else {
+      // node found
+      if (node.left === null && node.right === null) {
+        return null;
+      }
+      if (node.left === null) return node.right;
+      if (node.right === null) return node.left;
+
+      let minNode = this.findMin(node.right);
+      node.data = minNode.data;
+      node.right = this.deleteRec(node.right, minNode.data);
+    }
+    return node;
+  }
+  findMin(node) {
+    while (node.left !== null) {
+      node = node.left;
+    }
+    return node;
   }
 }
