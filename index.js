@@ -28,11 +28,38 @@ class Tree {
     if (array.length === 0) return null;
 
     const midIndex = Math.floor(array.length / 2);
-    const root = new Node(array[mid[Index]]);
+    const root = new Node(array[midIndex]);
 
     root.left = this.buildTree(array.slice(0, midIndex));
     root.right = this.buildTree(array.slice(midIndex + 1));
 
     return root;
+  }
+
+  insert(data) {
+    const node = this.root;
+    if (node === null) {
+      this.root = new Node(data);
+      return;
+    } else {
+      const searchTree = function (node) {
+        if (data < node.data) {
+          if (node.left === null) {
+            node.left = new Node(data);
+            return;
+          } else if (node.left !== null) {
+            return searchTree(node.left);
+          }
+        } else if (data > node.data) {
+          if (node.right === null) {
+            node.right = new Node(data);
+            return;
+          } else if (node.right !== null) {
+            return searchTree(node.right);
+          }
+        }
+      };
+      return searchTree(node); 
+    }
   }
 }
