@@ -223,15 +223,17 @@ class Tree {
   }
 
   rebalance() {
-    const values = []; 
+    const values = [];
 
     function inOrder(node) {
-        if (node === null) return; 
-        inOrder(node.left); 
-        values.push(node.data); 
-        inOrder(node.right); 
+      if (node === null) return;
+      inOrder(node.left);
+      values.push(node.data);
+      inOrder(node.right);
     }
-    inOrder(this.root); 
-    this.root = this.buildTree(values); 
+    inOrder(this.root);
+    this.root = this.buildTree(values);
   }
 }
+
+export { Node, Tree}; 
