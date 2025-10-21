@@ -132,7 +132,7 @@ class Tree {
 
   inOrderForEach(callback) {
     if (typeof callback !== "function") {
-      throw new Error("Cllback function is required");
+      throw new Error("Callback function is required");
     }
 
     function inOrder(node) {
@@ -200,5 +200,38 @@ class Tree {
       depthCount++;
     }
     return null;
+  }
+
+  isBalanced() {
+    function check(node) {
+      if (node === null) return { balanced: true, height: -1 };
+
+      const left = check(node.left);
+      const right = check(node.right);
+
+      const balanced =
+        left.balanced &&
+        right.balanced &&
+        Math.abs(left.height - right.height) <= 1;
+
+      const height = 1 + Math.max(left.height, right.height);
+
+      return { balanced, height };
+    }
+
+    return check(this.root).balanced;
+  }
+
+  rebalance() {
+    const values = []; 
+
+    function inOrder(node) {
+        if (node === null) return; 
+        inOrder(node.left); 
+        values.push(node.data); 
+        inOrder(node.right); 
+    }
+    inOrder(this.root); 
+    this.root = this.buildTree(values); 
   }
 }
