@@ -143,4 +143,18 @@ class Tree {
     }
     inOrder(this.root); 
   }
+
+  preOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+        throw new Error('Callback function is required'); 
+    }
+
+    function preOrder(node) {
+        if (node === null) return; 
+        callback(node); 
+        preOrder(node.left); 
+        preOrder(node.right); 
+    }
+    preOrder(this.root); 
+  }
 }
