@@ -112,63 +112,93 @@ class Tree {
   }
 
   levelOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-        throw new Error('Callback function is required'); 
+    if (typeof callback !== "function") {
+      throw new Error("Callback function is required");
     }
 
-    const queue = []; 
+    const queue = [];
     if (this.root !== null) {
-        queue.push(this.root); 
+      queue.push(this.root);
     }
 
     while (queue.length > 0) {
-        const node = queue.shift(); 
-        callback(node); 
+      const node = queue.shift();
+      callback(node);
 
-        if (node.left !== null) queue.push(node.left); 
-        if (node.right !== null) queue.push(node.right); 
+      if (node.left !== null) queue.push(node.left);
+      if (node.right !== null) queue.push(node.right);
     }
   }
 
   inOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-        throw new Error ('Cllback function is required'); 
+    if (typeof callback !== "function") {
+      throw new Error("Cllback function is required");
     }
 
     function inOrder(node) {
-        if (node === null) return; 
-        inOrder(node.left); 
-        callback(node); 
-        inOrder(node.right); 
+      if (node === null) return;
+      inOrder(node.left);
+      callback(node);
+      inOrder(node.right);
     }
-    inOrder(this.root); 
+    inOrder(this.root);
   }
 
   preOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-        throw new Error('Callback function is required'); 
+    if (typeof callback !== "function") {
+      throw new Error("Callback function is required");
     }
 
     function preOrder(node) {
-        if (node === null) return; 
-        callback(node); 
-        preOrder(node.left); 
-        preOrder(node.right); 
+      if (node === null) return;
+      callback(node);
+      preOrder(node.left);
+      preOrder(node.right);
     }
-    preOrder(this.root); 
+    preOrder(this.root);
   }
 
   postOrderForEach(callback) {
-    if (typeof callback !== 'function') {
-        throw new Error('Callback function is required'); 
+    if (typeof callback !== "function") {
+      throw new Error("Callback function is required");
     }
 
     function postOrder(node) {
-        if (node === null) return; 
-        postOrder(node.left); 
-        postOrder(node.right); 
-        callback(node); 
+      if (node === null) return;
+      postOrder(node.left);
+      postOrder(node.right);
+      callback(node);
     }
-    postOrder(this.root); 
+    postOrder(this.root);
+  }
+
+  height(value) {
+    const node = this.find(value);
+    if (!node) return null;
+
+    function getHeight(node) {
+      if (node === null) return -1;
+      const leftHeight = getHeight(node.left);
+      const rightHeight = getHeight(node.right);
+      return 1 + Math.max(leftHeight, rightHeight);
+    }
+    return getHeight(node);
+  }
+
+  depth(value) {
+    let current = this.root;
+    let depthCount = 0;
+
+    while (current !== null) {
+      if (value === current.data) {
+        return depthCount;
+      } else if (value < current.data) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+      depthCount++;
+    }
+    return null;
   }
 }
